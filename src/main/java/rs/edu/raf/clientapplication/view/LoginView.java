@@ -28,9 +28,7 @@ public class LoginView extends JPanel {
 	public LoginView() {
 
 		super();
-		this.setSize(400, 400);
-
-		this.setLayout(new BorderLayout());
+		this.setSize(1000, 1000);
 
 		initInputPanel();
 
@@ -57,7 +55,6 @@ public class LoginView extends JPanel {
 				String token = userServiceRestClient
 					.login(emailInput.getText(), String.valueOf(passwordInput.getPassword()));
 				ClientApplication.getInstance().setToken(token);
-				System.out.println(token);
 				ClientApplication.getInstance().getHotelsView().init();
 			} catch (IOException e) {
 				e.printStackTrace();

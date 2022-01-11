@@ -25,7 +25,7 @@ public class HotelChangeView extends JPanel{
     public HotelChangeView() {
 
         super();
-        this.setSize(400, 400);
+        this.setSize(1000, 1000);
 
         this.setLayout(new BorderLayout());
 

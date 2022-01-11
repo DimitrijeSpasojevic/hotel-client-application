@@ -2,6 +2,7 @@ package rs.edu.raf.clientapplication.restclient;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import okhttp3.*;
 import rs.edu.raf.clientapplication.ClientApplication;
 import rs.edu.raf.clientapplication.restclient.dto.*;
@@ -20,11 +21,12 @@ public class ReservationServiceRestClient {
 
     public ReservationServiceRestClient() {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.registerModule(new JavaTimeModule());
     }
 
     private String getUserNameById(Long userId) throws IOException {
         Request request = new Request.Builder()
-                .url(URL + "/user-service/user/" + userId)
+                .url(URL + "/hotel-user-service/api/user/" + userId)
                 .header("Authorization", "Bearer " + ClientApplication.getInstance().getToken())
                 .get()
                 .build();

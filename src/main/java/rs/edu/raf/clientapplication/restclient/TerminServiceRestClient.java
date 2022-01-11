@@ -2,6 +2,7 @@ package rs.edu.raf.clientapplication.restclient;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import okhttp3.*;
 import rs.edu.raf.clientapplication.ClientApplication;
 import rs.edu.raf.clientapplication.restclient.dto.HotelDto;
@@ -20,6 +21,10 @@ public class TerminServiceRestClient {
 
 	OkHttpClient client = new OkHttpClient();
 	ObjectMapper objectMapper = new ObjectMapper();
+
+	public TerminServiceRestClient() {
+		objectMapper.registerModule(new JavaTimeModule());
+	}
 
 	public TerminListDto getTermins(Long hotelId) throws IOException {
 
@@ -44,6 +49,8 @@ public class TerminServiceRestClient {
 				terminDto.setHotel(getHotelNameById(tipSobeDto.getHotelId()));
 				terminDto.setTipSobe(tipSobeDto.getIme());
 			}
+
+			return termins;
 		}
 
 		throw new RuntimeException("Ne uspelo citanje termina");
@@ -53,7 +60,7 @@ public class TerminServiceRestClient {
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
 		Request request = new Request.Builder()
-				.url(URL + "/hotel-reservation-service/api/hotel" + hotelId)
+				.url(URL + "/hotel-reservation-service/api/hotel/" + hotelId)
 				.header("Authorization", "Bearer " + ClientApplication.getInstance().getToken())
 				.get()
 				.build();

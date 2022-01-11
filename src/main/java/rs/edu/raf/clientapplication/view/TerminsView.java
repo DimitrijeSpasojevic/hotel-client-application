@@ -6,6 +6,7 @@ import rs.edu.raf.clientapplication.ClientApplication;
 import rs.edu.raf.clientapplication.restclient.ReservationServiceRestClient;
 import rs.edu.raf.clientapplication.restclient.dto.CreateRezervacijaDto;
 import rs.edu.raf.clientapplication.restclient.dto.HotelDto;
+import rs.edu.raf.clientapplication.restclient.dto.PayloadDto;
 import rs.edu.raf.clientapplication.restclient.dto.TerminListDto;
 import rs.edu.raf.clientapplication.model.TerminTableModel;
 import rs.edu.raf.clientapplication.restclient.TerminServiceRestClient;
@@ -30,23 +31,23 @@ public class TerminsView extends JPanel {
 
 	public TerminsView() throws IllegalAccessException, NoSuchMethodException {
 		super();
-		this.setSize(400, 400);
-		this.setLayout(new BorderLayout());
+		this.setSize(1000, 1000);
+		//this.setLayout(new BorderLayout());
 
 		initInputPanel();
 		terminTableModel = new TerminTableModel();
 		terminServiceRestClient = new TerminServiceRestClient();
 		reservationServiceRestClient = new ReservationServiceRestClient();
 		terminTable = new JTable(terminTableModel);
-		this.setLayout(new BorderLayout());
+		//this.setLayout(new BorderLayout());
 		JScrollPane scrollPane = new JScrollPane(terminTable);
-		this.add(scrollPane, BorderLayout.NORTH);
+		this.add(scrollPane);
 
 		jButtonCreateReservation = new JButton("Create Reservation");
-		this.add(jButtonCreateReservation, BorderLayout.CENTER);
+		this.add(jButtonCreateReservation);
 
 		jButton = new JButton("Create Order");
-		this.add(jButton, BorderLayout.CENTER);
+		this.add(jButton);
 
 		jButtonCreateReservation.addActionListener((event) -> {
 			this.setVisible(false);
@@ -76,9 +77,8 @@ public class TerminsView extends JPanel {
 
 	public void init(Long hotelId) throws IOException {
 		this.setVisible(true);
-		String[] chunks = ClientApplication.getInstance().getToken().split("\\.");
-		Claims claims = parseToken(chunks[0] + "." +chunks[1]);
-		userId = claims.get("id",Long.class);
+		PayloadDto payloadDto = ClientApplication.getPayload();
+		userId = payloadDto.getId();
 		TerminListDto terminListDto = terminServiceRestClient.getTermins(Long.valueOf(hotelId));
 		terminListDto.getContent().forEach(terminDto -> {
 			System.out.println(terminDto);
@@ -116,15 +116,4 @@ public class TerminsView extends JPanel {
 		this.add(inputPanel, BorderLayout.CENTER);
 	}
 
-	public Claims parseToken(String jwt) {
-		Claims claims;
-		try {
-			claims = Jwts.parser()
-					.parseClaimsJws(jwt)
-					.getBody();
-		} catch (Exception e) {
-			return null;
-		}
-		return claims;
-	}
 }

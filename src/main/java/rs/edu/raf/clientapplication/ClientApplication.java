@@ -1,9 +1,13 @@
 package rs.edu.raf.clientapplication;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import rs.edu.raf.clientapplication.restclient.dto.PayloadDto;
 import rs.edu.raf.clientapplication.view.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Base64;
 
 public class ClientApplication extends JFrame{
     private String token;
@@ -15,8 +19,6 @@ public class ClientApplication extends JFrame{
     private RegisterManagerView registerManagerView;
     private ReservationView reservationView;
     private UserChangeView userChangeView;
-
-
 
     private ClientApplication() throws IllegalAccessException, NoSuchMethodException {
         this.setTitle("Client Application");
@@ -49,6 +51,17 @@ public class ClientApplication extends JFrame{
 
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private static String decode(String encodedString) {
+        return new String(Base64.getUrlDecoder().decode(encodedString));
+    }
+
+    public static PayloadDto getPayload() throws JsonProcessingException {
+        String payload = ClientApplication.getInstance().token.split("\\.")[1];
+        String payloadDecoded = decode(payload);
+        PayloadDto payloadDto = new ObjectMapper().readValue(payloadDecoded, PayloadDto.class);
+        return payloadDto;
     }
 
     private static class InstanceHolder {

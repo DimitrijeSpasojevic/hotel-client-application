@@ -1,8 +1,11 @@
 package rs.edu.raf.clientapplication.view;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import rs.edu.raf.clientapplication.ClientApplication;
+import rs.edu.raf.clientapplication.restclient.dto.PayloadDto;
 import rs.edu.raf.clientapplication.restclient.dto.ReservationListDto;
 import rs.edu.raf.clientapplication.model.ReservationTableModel;
 import rs.edu.raf.clientapplication.restclient.ReservationServiceRestClient;
@@ -11,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 
 public class ReservationView extends JPanel {
     private ReservationTableModel reservationTableModel;
@@ -20,7 +24,7 @@ public class ReservationView extends JPanel {
 
     public ReservationView() throws IllegalAccessException, NoSuchMethodException {
         super();
-        this.setSize(400, 400);
+        this.setSize(1000, 1000);
 
         reservationTableModel = new ReservationTableModel();
         reservationServiceRestClient = new ReservationServiceRestClient();
@@ -47,9 +51,9 @@ public class ReservationView extends JPanel {
 
     public void init() throws IOException {
         this.setVisible(true);
-        String[] chunks = ClientApplication.getInstance().getToken().split("\\.");
-        Claims claims = parseToken(chunks[0] + "." +chunks[1]);
-        Long userId = claims.get("id", Long.class);
+        reservationTableModel.setRowCount(0);
+        PayloadDto payloadDto = ClientApplication.getPayload();
+        Long userId = payloadDto.getId();
         ReservationListDto reservationListDto = reservationServiceRestClient.getReservations(userId);
         reservationListDto.getContent().forEach(reservationDto -> {
             System.out.println(reservationDto);
@@ -63,17 +67,7 @@ public class ReservationView extends JPanel {
         });
     }
 
-    public Claims parseToken(String jwt) {
-        Claims claims;
-        try {
-            claims = Jwts.parser()
-                    .parseClaimsJws(jwt)
-                    .getBody();
-        } catch (Exception e) {
-            return null;
-        }
-        return claims;
-    }
+
 
     public ReservationTableModel getReservationTableModel() {
         return reservationTableModel;
