@@ -9,7 +9,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDate;
 
-public class RegisterView extends JPanel {
+public class RegisterClientView extends JPanel {
     private JPanel inputPanel;
     private JTextField emailInput;
     private JPasswordField passwordInput;
@@ -37,7 +37,7 @@ public class RegisterView extends JPanel {
 
         initInputPanel();
 
-        registerButton = new JButton("Register");
+        registerButton = new JButton("Register client");
         this.add(registerButton, BorderLayout.SOUTH);
         registerButton.addActionListener((event) -> {
             try {

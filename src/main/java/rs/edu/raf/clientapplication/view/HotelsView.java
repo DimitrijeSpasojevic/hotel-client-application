@@ -24,6 +24,7 @@ public class HotelsView extends JPanel {
     public HotelsView() throws IllegalAccessException, NoSuchMethodException {
         super();
         this.setSize(400, 400);
+        this.setVisible(false);
 
         hotelTableModel = new HotelTableModel();
         hotelServiceRestClient = new HotelServiceRestClient();
