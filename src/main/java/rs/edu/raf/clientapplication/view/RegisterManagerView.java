@@ -1,17 +1,15 @@
 package rs.edu.raf.clientapplication.view;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import rs.edu.raf.clientapplication.ClientApplication;
 import rs.edu.raf.clientapplication.restclient.UserServiceRestClient;
-import rs.edu.raf.clientapplication.restclient.dto.ClientDto;
-import rs.edu.raf.clientapplication.restclient.dto.CreateClientDto;
+import rs.edu.raf.clientapplication.restclient.dto.CreateManagerDto;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDate;
 
-public class RegisterView extends JPanel {
+public class RegisterManagerView extends JPanel {
     private JPanel inputPanel;
     private JTextField emailInput;
     private JPasswordField passwordInput;
@@ -22,7 +20,10 @@ public class RegisterView extends JPanel {
     private JTextField contactInput;
     private JTextField firstNameInput;
     private JTextField lastNameInput;
-    private JTextField passportInput;
+    private JTextField hotelNameInput;
+    private JTextField dateOfHireInput;
+    private JTextField monthOfHireInput;
+    private JTextField yearOfHireInput;
 
     private JButton registerButton;
 
@@ -30,36 +31,38 @@ public class RegisterView extends JPanel {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    public RegisterView() {
+    public RegisterManagerView() {
 
         super();
         this.setSize(400, 400);
-
         this.setLayout(new BorderLayout());
 
         initInputPanel();
 
-        registerButton = new JButton("Register");
+        registerButton = new JButton("Register manager");
         this.add(registerButton, BorderLayout.SOUTH);
         registerButton.addActionListener((event) -> {
             try {
-                CreateClientDto createClientDto = new CreateClientDto();
-                createClientDto.setEmail(emailInput.getText());
-                createClientDto.setPassword(passwordInput.getText());
-                createClientDto.setDateOfBirth(LocalDate.of(Integer.parseInt(yearOfBirthInput.getText()),
+                CreateManagerDto createManagerDto = new CreateManagerDto();
+                createManagerDto.setEmail(emailInput.getText());
+                createManagerDto.setPassword(passwordInput.getText());
+                createManagerDto.setDateOfBirth(LocalDate.of(Integer.parseInt(yearOfBirthInput.getText()),
                         Integer.parseInt(monthOfBirthInput.getText()),
                         Integer.parseInt(dateOfBirthInput.getText())));
-                createClientDto.setUsername(usernameInput.getText());
-                createClientDto.setContact(contactInput.getText());
-                createClientDto.setFirstName(firstNameInput.getText());
-                createClientDto.setLastName(lastNameInput.getText());
-                createClientDto.setPassportId(Long.valueOf(passportInput.getText()));
-                UserServiceRestClient userServiceRestClient = new UserServiceRestClient();
-                userServiceRestClient.registerClient(createClientDto);
+                createManagerDto.setUsername(usernameInput.getText());
+                createManagerDto.setContact(contactInput.getText());
+                createManagerDto.setFirstName(firstNameInput.getText());
+                createManagerDto.setLastName(lastNameInput.getText());
+                createManagerDto.setHotelName(hotelNameInput.getText());
+                createManagerDto.setDateOfBirth(LocalDate.of(Integer.parseInt(dateOfHireInput.getText()),
+                        Integer.parseInt(dateOfHireInput.getText()),
+                        Integer.parseInt(dateOfHireInput.getText())));
+                userServiceRestClient.registerManager(createManagerDto);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
+        this.setVisible(false);
     }
 
     private void initInputPanel() {
@@ -74,7 +77,11 @@ public class RegisterView extends JPanel {
         contactInput = new JTextField(30);
         firstNameInput = new JTextField(30);
         lastNameInput = new JTextField(30);
-        passportInput = new JTextField(30);
+        hotelNameInput = new JTextField(30);
+        dateOfHireInput = new JTextField(2);
+        monthOfHireInput = new JTextField(2);
+        yearOfHireInput = new JTextField(4);
+
 
         inputPanel.add(new JLabel("Email: "));
         inputPanel.add(emailInput);
@@ -103,9 +110,22 @@ public class RegisterView extends JPanel {
         inputPanel.add(new JLabel("Last name"));
         inputPanel.add(lastNameInput);
 
-        inputPanel.add(new JLabel("Passport id"));
-        inputPanel.add(passportInput);
+        inputPanel.add(new JLabel("Hotel name"));
+        inputPanel.add(hotelNameInput);
+
+        inputPanel.add(new JLabel("Date of hire"));
+        inputPanel.add(dateOfHireInput);
+
+        inputPanel.add(new JLabel("Month of hire"));
+        inputPanel.add(monthOfHireInput);
+
+        inputPanel.add(new JLabel("Year of hire"));
+        inputPanel.add(yearOfHireInput);
 
         this.add(inputPanel, BorderLayout.CENTER);
+    }
+
+    public void init(){
+        this.setVisible(true);
     }
 }

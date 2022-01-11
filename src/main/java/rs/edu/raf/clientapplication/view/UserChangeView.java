@@ -1,4 +1,6 @@
 package rs.edu.raf.clientapplication.view;
 
-public class UserChangeView {
+import javax.swing.*;
+
+public class UserChangeView extends JPanel {
 }

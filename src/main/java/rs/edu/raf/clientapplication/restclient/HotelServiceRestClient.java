@@ -41,4 +41,26 @@ public class HotelServiceRestClient {
 
         throw new RuntimeException("Ne uspelo citanje svih hotela");
     }
+
+    public HotelDto changeHotel(HotelDto hotelDto) throws IOException  {
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        RequestBody body = RequestBody.create(JSON, objectMapper.writeValueAsString(hotelDto));
+        Request request = new Request.Builder()
+                .url(URL + "/hotel")
+                .header("Authorization", "Bearer " + ClientApplication.getInstance().getToken())
+                .put(body)
+                .build();
+
+        Call call = client.newCall(request);
+
+        Response response = call.execute();
+
+        if (response.isSuccessful()) {
+            String json = response.body().string();
+
+            return objectMapper.readValue(json, HotelDto.class);
+        }
+
+        throw new RuntimeException("Ne uspela promena polja za hotel");
+    }
 }

@@ -92,4 +92,25 @@ public class ReservationServiceRestClient {
         }
         return reservationListDto;
     }
+
+    public ReservationDto createRezervacija(CreateRezervacijaDto createRezervacijaDto)  throws IOException{
+        RequestBody body = RequestBody.create(JSON, objectMapper.writeValueAsString(createRezervacijaDto));
+        Request request = new Request.Builder()
+                .url(URL + "/hotel-reservation-service/api/rezervacija")
+                .header("Authorization", "Bearer " + ClientApplication.getInstance().getToken())
+                .post(body)
+                .build();
+
+        Call call = client.newCall(request);
+
+        Response response = call.execute();
+
+        if (response.isSuccessful()) {
+            String json = response.body().string();
+
+            return objectMapper.readValue(json, ReservationDto.class);
+        }
+
+        throw new RuntimeException("Nije uspelo kreiranje rezervacije od klijenta");
+    }
 }

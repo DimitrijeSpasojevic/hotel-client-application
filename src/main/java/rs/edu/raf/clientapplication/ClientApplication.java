@@ -1,7 +1,6 @@
 package rs.edu.raf.clientapplication;
 
-import rs.edu.raf.clientapplication.view.LoginView;
-import rs.edu.raf.clientapplication.view.TerminsView;
+import rs.edu.raf.clientapplication.view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +9,14 @@ public class ClientApplication extends JFrame{
     private String token;
     private LoginView loginView;
     private TerminsView terminsView;
+    private HotelChangeView hotelChangeView;
+    private HotelsView hotelsView;
+    private RegisterClientView registerClientView;
+    private RegisterManagerView registerManagerView;
+    private ReservationView reservationView;
+    private UserChangeView userChangeView;
+
+
 
     private ClientApplication() throws IllegalAccessException, NoSuchMethodException {
         this.setTitle("Client Application");
@@ -19,8 +26,26 @@ public class ClientApplication extends JFrame{
         loginView = new LoginView();
         this.add(loginView, BorderLayout.NORTH);
 
+        hotelChangeView = new HotelChangeView();
+        this.add(hotelChangeView, BorderLayout.CENTER);
+
         terminsView = new TerminsView();
         this.add(terminsView, BorderLayout.CENTER);
+
+        hotelsView = new HotelsView();
+        this.add(hotelsView, BorderLayout.CENTER);
+        
+        registerClientView = new RegisterClientView();
+        this.add(registerClientView, BorderLayout.CENTER);
+
+        registerManagerView = new RegisterManagerView();
+        this.add(registerManagerView, BorderLayout.CENTER);
+        
+        userChangeView = new UserChangeView();
+        this.add(userChangeView, BorderLayout.CENTER);
+        
+        reservationView = new ReservationView();
+        this.add(reservationView, BorderLayout.CENTER);
 
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,5 +92,54 @@ public class ClientApplication extends JFrame{
     public static ClientApplication getInstance() {
         return InstanceHolder.instance;
     }
+
+    public HotelChangeView getHotelChangeView() {
+        return hotelChangeView;
+    }
+
+    public void setHotelChangeView(HotelChangeView hotelChangeView) {
+        this.hotelChangeView = hotelChangeView;
+    }
+
+    public HotelsView getHotelsView() {
+        return hotelsView;
+    }
+
+    public void setHotelsView(HotelsView hotelsView) {
+        this.hotelsView = hotelsView;
+    }
+
+    public RegisterClientView getRegisterClientView() {
+        return registerClientView;
+    }
+
+    public void setRegisterClientView(RegisterClientView registerClientView) {
+        this.registerClientView = registerClientView;
+    }
+
+    public RegisterManagerView getRegisterManagerView() {
+        return registerManagerView;
+    }
+
+    public void setRegisterManagerView(RegisterManagerView registerManagerView) {
+        this.registerManagerView = registerManagerView;
+    }
+
+    public ReservationView getReservationView() {
+        return reservationView;
+    }
+
+    public void setReservationView(ReservationView reservationView) {
+        this.reservationView = reservationView;
+    }
+
+    public UserChangeView getUserChangeView() {
+        return userChangeView;
+    }
+
+    public void setUserChangeView(UserChangeView userChangeView) {
+        this.userChangeView = userChangeView;
+    }
+
 
 }
