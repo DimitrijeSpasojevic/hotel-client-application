@@ -19,14 +19,14 @@ public class HomePageView extends JPanel {
         super();
         this.setSize(1000, 1000);
         this.setVisible(false);
+        this.setLayout(new GridLayout(0,1));
 
         btnHotel = new JButton("Show Hotels");
         btnReservation = new JButton("Show Reservations");
         btnUserChange = new JButton("Edit Profile");
-        this.add(btnHotel, BorderLayout.CENTER);
-        this.add(btnReservation, BorderLayout.CENTER);
-        this.add(btnUserChange, BorderLayout.CENTER);
-
+        this.add(btnHotel);
+        this.add(btnReservation);
+        this.add(btnUserChange);
 
         btnHotel.addActionListener((event) -> {
             this.setVisible(false);

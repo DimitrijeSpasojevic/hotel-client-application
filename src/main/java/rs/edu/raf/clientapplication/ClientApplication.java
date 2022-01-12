@@ -24,34 +24,33 @@ public class ClientApplication extends JFrame{
     private ClientApplication() throws IllegalAccessException, NoSuchMethodException {
         this.setTitle("Client Application");
         this.setSize(1200, 1200);
-        this.setLayout(new BorderLayout());
 
         homePageView = new HomePageView();
-        this.add(homePageView, BorderLayout.CENTER);
+        this.add(homePageView);
 
         loginView = new LoginView();
-        this.add(loginView, BorderLayout.NORTH);
+        this.add(loginView);
 
         hotelChangeView = new HotelChangeView();
-        this.add(hotelChangeView, BorderLayout.CENTER);
+        this.add(hotelChangeView);
 
         terminsView = new TerminsView();
-        this.add(terminsView, BorderLayout.CENTER);
+        this.add(terminsView);
 
         hotelsView = new HotelsView();
-        this.add(hotelsView, BorderLayout.CENTER);
+        this.add(hotelsView);
         
         registerClientView = new RegisterClientView();
-        this.add(registerClientView, BorderLayout.CENTER);
+        this.add(registerClientView);
 
         registerManagerView = new RegisterManagerView();
-        this.add(registerManagerView, BorderLayout.CENTER);
+        this.add(registerManagerView);
         
         userChangeView = new UserChangeView();
-        this.add(userChangeView, BorderLayout.CENTER);
+        this.add(userChangeView);
         
         reservationView = new ReservationView();
-        this.add(reservationView, BorderLayout.CENTER);
+        this.add(reservationView);
 
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

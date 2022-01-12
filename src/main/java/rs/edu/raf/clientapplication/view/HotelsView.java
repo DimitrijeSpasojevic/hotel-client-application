@@ -33,15 +33,20 @@ public class HotelsView extends JPanel {
         hotelTableModel = new HotelTableModel();
         hotelServiceRestClient = new HotelServiceRestClient();
         hotelTable = new JTable(hotelTableModel);
-        //this.setLayout(new BorderLayout());
         JScrollPane scrollPane = new JScrollPane(hotelTable);
-        this.add(scrollPane, BorderLayout.NORTH);
+        this.add(scrollPane);
 
         jButtonShow = new JButton("Show hotel");
         jButtonChangeHotel = new JButton("Change hotel");
-        this.add(jButtonShow, BorderLayout.CENTER);
-        this.add(jButtonChangeHotel, BorderLayout.CENTER);
+        this.add(jButtonShow);
+        this.add(jButtonChangeHotel);
 
+        JButton backToHomeButton = new JButton("Back to home");
+        backToHomeButton.addActionListener((event) -> {
+            this.setVisible(false);
+            ClientApplication.getInstance().getHomePageView().init();
+        });
+        this.add(backToHomeButton);
 
         jButtonShow.addActionListener((event) -> {
             this.setVisible(false);
@@ -76,10 +81,10 @@ public class HotelsView extends JPanel {
             jButtonChangeHotel.setVisible(false);
         }
         this.setVisible(true);
+        hotelTableModel.setRowCount(0);
         HotelListDto hotelListDto = hotelServiceRestClient.getHotels();
         hotelListDto.getContent().forEach(hotelDto -> {
             System.out.println(hotelDto);
-            //TODO remove rows
             hotelTableModel.addRow(new Object[]{hotelDto.getIme(), hotelDto.getOpis(),hotelDto.getGrad(),hotelDto.getId()});
         });
 

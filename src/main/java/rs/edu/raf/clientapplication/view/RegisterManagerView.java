@@ -1,6 +1,7 @@
 package rs.edu.raf.clientapplication.view;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import rs.edu.raf.clientapplication.ClientApplication;
 import rs.edu.raf.clientapplication.restclient.UserServiceRestClient;
 import rs.edu.raf.clientapplication.restclient.dto.CreateManagerDto;
@@ -15,16 +16,12 @@ public class RegisterManagerView extends JPanel {
     private JTextField emailInput;
     private JPasswordField passwordInput;
     private JTextField dateOfBirthInput;
-    private JTextField monthOfBirthInput;
-    private JTextField yearOfBirthInput;
     private JTextField usernameInput;
     private JTextField contactInput;
     private JTextField firstNameInput;
     private JTextField lastNameInput;
-    private JTextField hotelNameInput;
+    private JComboBox<String> hotelNameInput;
     private JTextField dateOfHireInput;
-    private JTextField monthOfHireInput;
-    private JTextField yearOfHireInput;
 
     private JButton registerButton;
 
@@ -36,12 +33,18 @@ public class RegisterManagerView extends JPanel {
 
         super();
         this.setSize(1000, 1000);
-        this.setLayout(new BorderLayout());
-
         initInputPanel();
 
         registerButton = new JButton("Register manager");
-        this.add(registerButton, BorderLayout.SOUTH);
+        this.add(registerButton);
+
+        JButton backToLogin = new JButton("Back to login");
+        backToLogin.addActionListener((event) -> {
+            this.setVisible(false);
+            ClientApplication.getInstance().getLoginView().init();
+        });
+        this.add(backToLogin);
+
         registerButton.addActionListener((event) -> {
             this.setVisible(false);
             try {
@@ -55,14 +58,14 @@ public class RegisterManagerView extends JPanel {
                 createManagerDto.setContact(contactInput.getText());
                 createManagerDto.setFirstName(firstNameInput.getText());
                 createManagerDto.setLastName(lastNameInput.getText());
-                createManagerDto.setHotelName(hotelNameInput.getText());
-                createManagerDto.setDateOfBirth(LocalDate.of(Integer.parseInt(dateOfHireInput.getText()),
-                        Integer.parseInt(dateOfHireInput.getText()),
-                        Integer.parseInt(dateOfHireInput.getText())));
+                createManagerDto.setHotelName(hotelNameInput.getSelectedItem().toString());
+                createManagerDto.setHireDate(LocalDate.parse(dateOfHireInput.getText(), DateTimeFormatter.ISO_LOCAL_DATE));
                 userServiceRestClient.registerManager(createManagerDto);
                 ClientApplication.getInstance().getLoginView().init();
             } catch (IOException e) {
                 e.printStackTrace();
+            }catch (Exception exception){
+                exception.printStackTrace();
             }
         });
         this.setVisible(false);
@@ -70,20 +73,27 @@ public class RegisterManagerView extends JPanel {
 
     private void initInputPanel() {
         inputPanel = new JPanel();
-
+        inputPanel.setLayout(new GridLayout(0,1));
         emailInput = new JTextField(20);
         passwordInput = new JPasswordField(20);
         dateOfBirthInput = new JTextField(2);
-        monthOfBirthInput = new JTextField(2);
-        yearOfBirthInput = new JTextField(4);
         usernameInput = new JTextField(30);
         contactInput = new JTextField(30);
         firstNameInput = new JTextField(30);
         lastNameInput = new JTextField(30);
-        hotelNameInput = new JTextField(30);
-        dateOfHireInput = new JTextField(2);
-        monthOfHireInput = new JTextField(2);
-        yearOfHireInput = new JTextField(4);
+        hotelNameInput = new JComboBox<>();
+        HotelListDto hotelListDto;
+        try {
+            hotelListDto = hotelServiceRestClient.getHotels();
+            for (HotelDto hotelDto : hotelListDto.getContent())
+                hotelNameInput.addItem(hotelDto.getIme());
+            hotelNameInput.setSelectedIndex(0);
+        } catch (IOException error) {
+            error.printStackTrace();
+        }
+
+
+        dateOfHireInput = new JTextField(10);
 
 
         inputPanel.add(new JLabel("Email: "));
@@ -94,12 +104,6 @@ public class RegisterManagerView extends JPanel {
 
         inputPanel.add(new JLabel("Date of birth"));
         inputPanel.add(dateOfBirthInput);
-
-        inputPanel.add(new JLabel("Month of birth"));
-        inputPanel.add(monthOfBirthInput);
-
-        inputPanel.add(new JLabel("Year of birth"));
-        inputPanel.add(yearOfBirthInput);
 
         inputPanel.add(new JLabel("Username"));
         inputPanel.add(usernameInput);
@@ -119,13 +123,8 @@ public class RegisterManagerView extends JPanel {
         inputPanel.add(new JLabel("Date of hire"));
         inputPanel.add(dateOfHireInput);
 
-        inputPanel.add(new JLabel("Month of hire"));
-        inputPanel.add(monthOfHireInput);
 
-        inputPanel.add(new JLabel("Year of hire"));
-        inputPanel.add(yearOfHireInput);
-
-        this.add(inputPanel, BorderLayout.CENTER);
+        this.add(inputPanel);
     }
 
     public void init(){

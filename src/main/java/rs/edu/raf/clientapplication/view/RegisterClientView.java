@@ -9,14 +9,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class RegisterClientView extends JPanel {
     private JPanel inputPanel;
     private JTextField emailInput;
     private JPasswordField passwordInput;
     private JTextField dateOfBirthInput;
-    private JTextField monthOfBirthInput;
-    private JTextField yearOfBirthInput;
     private JTextField usernameInput;
     private JTextField contactInput;
     private JTextField firstNameInput;
@@ -34,21 +33,25 @@ public class RegisterClientView extends JPanel {
         super();
         this.setSize(1000, 1000);
 
-        this.setLayout(new BorderLayout());
-
         initInputPanel();
 
         registerButton = new JButton("Register client");
-        this.add(registerButton, BorderLayout.SOUTH);
+        this.add(registerButton);
+
+        JButton backToLogin = new JButton("Back to login");
+        backToLogin.addActionListener((event) -> {
+            this.setVisible(false);
+            ClientApplication.getInstance().getLoginView().init();
+        });
+        this.add(backToLogin);
+
         registerButton.addActionListener((event) -> {
             this.setVisible(false);
             try {
                 CreateClientDto createClientDto = new CreateClientDto();
                 createClientDto.setEmail(emailInput.getText());
                 createClientDto.setPassword(passwordInput.getText());
-                createClientDto.setDateOfBirth(LocalDate.of(Integer.parseInt(yearOfBirthInput.getText()),
-                        Integer.parseInt(monthOfBirthInput.getText()),
-                        Integer.parseInt(dateOfBirthInput.getText())));
+                createClientDto.setDateOfBirth(LocalDate.parse(dateOfBirthInput.getText(), DateTimeFormatter.ISO_LOCAL_DATE));
                 createClientDto.setUsername(usernameInput.getText());
                 createClientDto.setContact(contactInput.getText());
                 createClientDto.setFirstName(firstNameInput.getText());
@@ -65,12 +68,10 @@ public class RegisterClientView extends JPanel {
 
     private void initInputPanel() {
         inputPanel = new JPanel();
-
+        inputPanel.setLayout(new GridLayout(0,1));
         emailInput = new JTextField(20);
         passwordInput = new JPasswordField(20);
         dateOfBirthInput = new JTextField(2);
-        monthOfBirthInput = new JTextField(2);
-        yearOfBirthInput = new JTextField(4);
         usernameInput = new JTextField(30);
         contactInput = new JTextField(30);
         firstNameInput = new JTextField(30);
@@ -86,11 +87,6 @@ public class RegisterClientView extends JPanel {
         inputPanel.add(new JLabel("Date of birth"));
         inputPanel.add(dateOfBirthInput);
 
-        inputPanel.add(new JLabel("Month of birth"));
-        inputPanel.add(monthOfBirthInput);
-
-        inputPanel.add(new JLabel("Year of birth"));
-        inputPanel.add(yearOfBirthInput);
 
         inputPanel.add(new JLabel("Username"));
         inputPanel.add(usernameInput);
@@ -107,7 +103,7 @@ public class RegisterClientView extends JPanel {
         inputPanel.add(new JLabel("Passport id"));
         inputPanel.add(passportInput);
 
-        this.add(inputPanel, BorderLayout.CENTER);
+        this.add(inputPanel);
     }
     public void init(){
         this.setVisible(true);

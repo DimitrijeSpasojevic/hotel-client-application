@@ -25,17 +25,24 @@ public class ReservationView extends JPanel {
         reservationTableModel = new ReservationTableModel();
         reservationServiceRestClient = new ReservationServiceRestClient();
         reservationTable = new JTable(reservationTableModel);
-        this.setLayout(new BorderLayout());
+        
         JScrollPane scrollPane = new JScrollPane(reservationTable);
-        this.add(scrollPane, BorderLayout.NORTH);
+        this.add(scrollPane);
         jButtonDelete = new JButton("Delete reservation");
-        this.add(jButtonDelete, BorderLayout.CENTER);
+        this.add(jButtonDelete);
+
+        JButton backToHomeButton = new JButton("Back to home");
+        backToHomeButton.addActionListener((event) -> {
+            this.setVisible(false);
+            ClientApplication.getInstance().getHomePageView().init();
+        });
+        this.add(backToHomeButton);
 
         jButtonDelete.addActionListener((event) -> {
             Long id = reservationTableModel.getReservationListDto().getContent().get(reservationTable.getSelectedRow()).getId();
             System.out.println(id);
-            //TODO delete rezervation
             try {
+                reservationServiceRestClient.deleteRezervacija(id);
                 init();
             } catch (IOException e) {
                 e.printStackTrace();

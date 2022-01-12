@@ -38,7 +38,6 @@ public class TerminsView extends JPanel {
 		terminServiceRestClient = new TerminServiceRestClient();
 		reservationServiceRestClient = new ReservationServiceRestClient();
 		terminTable = new JTable(terminTableModel);
-		//this.setLayout(new BorderLayout());
 		JScrollPane scrollPane = new JScrollPane(terminTable);
 		this.add(scrollPane);
 
@@ -67,9 +66,6 @@ public class TerminsView extends JPanel {
 				e.printStackTrace();
 			}
 		});
-		jButton.addActionListener((event) -> {
-			System.out.println(terminTableModel.getTerminListDto().getContent().get(terminTable.getSelectedRow()).getId());
-		});
 
 		setVisible(false);
 	}
@@ -79,6 +75,7 @@ public class TerminsView extends JPanel {
 		PayloadDto payloadDto = ClientApplication.getPayload();
 		userId = payloadDto.getId();
 		TerminListDto terminListDto = terminServiceRestClient.getTermins(Long.valueOf(hotelId));
+		terminTableModel.setRowCount(0);
 		terminListDto.getContent().forEach(terminDto -> {
 			System.out.println(terminDto);
 			terminTableModel.addRow(new Object[]{terminDto.getTipSobeId(), terminDto.getHotel(),terminDto.getBrojSlobodnihSoba(),
@@ -97,6 +94,7 @@ public class TerminsView extends JPanel {
 
 	private void initInputPanel(){
 		inputPanel = new JPanel();
+		inputPanel.setLayout(new GridLayout(0,1));
 
 		pocetniTerminInput = new JTextField(10);
 		krajnjiTerminInput = new JTextField(10);
@@ -112,7 +110,7 @@ public class TerminsView extends JPanel {
 		inputPanel.add(new JLabel("Tip Sobe ID"));
 		inputPanel.add(tipSobeIdInput);
 
-		this.add(inputPanel, BorderLayout.CENTER);
+		this.add(inputPanel);
 	}
 
 }

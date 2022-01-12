@@ -26,7 +26,6 @@ public class HotelServiceRestClient {
     public HotelListDto getHotels() throws IOException {
         Request request = new Request.Builder()
                 .url(URL + "/hotel")
-                .header("Authorization", "Bearer " + ClientApplication.getInstance().getToken())
                 .get()
                 .build();
 

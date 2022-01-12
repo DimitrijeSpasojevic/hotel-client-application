@@ -37,7 +37,7 @@ public class LoginView extends JPanel {
 		registerMButton = new JButton("Register Manager");
 		this.add(registerCButton,BorderLayout.EAST);
 		this.add(registerMButton,BorderLayout.CENTER);
-		this.add(loginButton, BorderLayout.SOUTH);
+		this.add(loginButton);
 
 		registerMButton.addActionListener((event) -> {
 			this.setVisible(false);
@@ -49,12 +49,12 @@ public class LoginView extends JPanel {
 			ClientApplication.getInstance().getRegisterClientView().init();
 		});
 		loginButton.addActionListener((event) -> {
-			this.setVisible(false);
 
 			try {
 				String token = userServiceRestClient
 					.login(emailInput.getText(), String.valueOf(passwordInput.getPassword()));
 				ClientApplication.getInstance().setToken(token);
+				this.setVisible(false);
 				ClientApplication.getInstance().getHomePageView().init();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -65,6 +65,7 @@ public class LoginView extends JPanel {
 	private void initInputPanel() {
 
 		inputPanel = new JPanel();
+		inputPanel.setLayout(new GridLayout(0,1));
 
 		emailLabel = new JLabel("Email: ");
 		passwordLabel = new JLabel("Password: ");
@@ -78,7 +79,7 @@ public class LoginView extends JPanel {
 		inputPanel.add(passwordLabel);
 		inputPanel.add(passwordInput);
 
-		this.add(inputPanel, BorderLayout.CENTER);
+		this.add(inputPanel);
 	}
 
 	public void init() {

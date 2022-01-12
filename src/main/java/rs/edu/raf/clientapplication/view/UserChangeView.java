@@ -35,7 +35,15 @@ public class UserChangeView extends JPanel {
 
         changeButton = new JButton("Change client");
 
-        this.add(changeButton, BorderLayout.SOUTH);
+        this.add(changeButton);
+
+        JButton backToHomeButton = new JButton("Back to home");
+        backToHomeButton.addActionListener((event) -> {
+            this.setVisible(false);
+            ClientApplication.getInstance().getHomePageView().init();
+        });
+        this.add(backToHomeButton);
+
         changeButton.addActionListener((event) -> {
             try {
                 UpdateClientDto updateClientDto = new UpdateClientDto();
@@ -57,6 +65,7 @@ public class UserChangeView extends JPanel {
 
     private void initInputPanel()  {
         inputPanel = new JPanel();
+        inputPanel.setLayout(new GridLayout(0,1));
         usernameInput = new JTextField(30);
         emailInput = new JTextField(20);
         passwordInput = new JPasswordField(20);
@@ -85,7 +94,7 @@ public class UserChangeView extends JPanel {
 
         inputPanel.add(new JLabel("Passport"));
         inputPanel.add(passportInput);
-
+        this.add(inputPanel);
     }
 
     public void init() throws IOException {

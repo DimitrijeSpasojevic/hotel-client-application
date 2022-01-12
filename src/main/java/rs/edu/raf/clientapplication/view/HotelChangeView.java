@@ -27,12 +27,10 @@ public class HotelChangeView extends JPanel{
         super();
         this.setSize(1000, 1000);
 
-        this.setLayout(new BorderLayout());
-
         initInputPanel();
 
         changeHotelBtn = new JButton("Submit");
-        this.add(changeHotelBtn, BorderLayout.SOUTH);
+        this.add(changeHotelBtn);
         changeHotelBtn.addActionListener((event) -> {
             try {
                 HotelDto hotelDto = new HotelDto();
@@ -52,6 +50,7 @@ public class HotelChangeView extends JPanel{
 
     private void initInputPanel() {
         inputPanel = new JPanel();
+        inputPanel.setLayout(new GridLayout(0,1));
 
         nameInput = new JTextField(20);
         descriptionInput = new JTextField(2);
@@ -66,7 +65,7 @@ public class HotelChangeView extends JPanel{
         inputPanel.add(new JLabel("Description"));
         inputPanel.add(descriptionInput);
 
-        this.add(inputPanel, BorderLayout.CENTER);
+        this.add(inputPanel);
     }
 
     public void init() throws IOException {

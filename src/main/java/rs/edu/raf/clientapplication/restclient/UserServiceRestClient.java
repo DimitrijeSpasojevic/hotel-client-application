@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class UserServiceRestClient {
 
-	public static final String URL = "http://localhost:8084/hotel-user-service/api";
+	public static final String URL = "http://localhost:8084/hotel-user-service/api/user";
 
 	public static final MediaType JSON
 		= MediaType.get("application/json; charset=utf-8");
@@ -30,7 +30,7 @@ public class UserServiceRestClient {
 		RequestBody body = RequestBody.create(JSON, objectMapper.writeValueAsString(tokenRequestDto));
 
 		Request request = new Request.Builder()
-			.url(URL + "/user/login")
+			.url(URL + "/login")
 			.post(body)
 			.build();
 
@@ -91,7 +91,7 @@ public class UserServiceRestClient {
 	public ClientDto updateClient(UpdateClientDto updateClientDto) throws IOException {
 		RequestBody body = RequestBody.create(JSON, objectMapper.writeValueAsString(updateClientDto));
 		Request request = new Request.Builder()
-				.url(URL + "/user/edit")
+				.url(URL + "/edit")
 				.header("Authorization", "Bearer " + ClientApplication.getInstance().getToken())
 				.put(body)
 				.build();
@@ -111,7 +111,7 @@ public class UserServiceRestClient {
 
 	public ClientDto getClientDto() throws IOException{
 		Request request = new Request.Builder()
-				.url(URL + "/user/" + ClientApplication.getPayload().getId())
+				.url(URL + "/" + ClientApplication.getPayload().getId())
 				.header("Authorization", "Bearer " + ClientApplication.getInstance().getToken())
 				.get()
 				.build();
