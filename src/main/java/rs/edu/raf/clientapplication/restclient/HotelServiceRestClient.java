@@ -32,13 +32,11 @@ public class HotelServiceRestClient {
         Call call = client.newCall(request);
 
         Response response = call.execute();
-
         if (response.isSuccessful()) {
             String json = response.body().string();
 
             return objectMapper.readValue(json, HotelListDto.class);
         }
-
         throw new RuntimeException("Ne uspelo citanje svih hotela");
     }
 

@@ -7,10 +7,8 @@ import rs.edu.raf.clientapplication.model.ReservationTableModel;
 import rs.edu.raf.clientapplication.restclient.ReservationServiceRestClient;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
 
 public class ReservationView extends JPanel {
     private ReservationTableModel reservationTableModel;
@@ -53,8 +51,8 @@ public class ReservationView extends JPanel {
     }
 
     public void init() throws IOException {
-        this.setVisible(true);
         reservationTableModel.setRowCount(0);
+        reservationTableModel.getReservationListDto().getContent().clear();
         PayloadDto payloadDto = ClientApplication.getPayload();
         Long userId = payloadDto.getId();
         ReservationListDto reservationListDto = reservationServiceRestClient.getReservations(userId);
@@ -65,12 +63,12 @@ public class ReservationView extends JPanel {
                     reservationDto.getPocetniTerminDatum().format(DateTimeFormatter.ISO_LOCAL_DATE),
                     reservationDto.getKrajnjiTerminDatum().format(DateTimeFormatter.ISO_LOCAL_DATE),
                     reservationDto.getUserName(),
-                    reservationDto.getCena()
+                    reservationDto.getCena(),
+                    reservationDto.getId()
             });
         });
+        this.setVisible(true);
     }
-
-
 
     public ReservationTableModel getReservationTableModel() {
         return reservationTableModel;

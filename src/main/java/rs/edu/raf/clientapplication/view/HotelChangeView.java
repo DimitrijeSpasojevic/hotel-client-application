@@ -23,7 +23,6 @@ public class HotelChangeView extends JPanel{
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public HotelChangeView() {
-
         super();
         this.setSize(1000, 1000);
 
@@ -45,6 +44,14 @@ public class HotelChangeView extends JPanel{
                 e.printStackTrace();
             }
         });
+
+        JButton backToHomeButton = new JButton("Back to home");
+        backToHomeButton.addActionListener((event) -> {
+            this.setVisible(false);
+            ClientApplication.getInstance().getHomePageView().init();
+        });
+        this.add(backToHomeButton);
+
         this.setVisible(false);
     }
 

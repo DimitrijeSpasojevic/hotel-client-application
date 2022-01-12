@@ -1,12 +1,9 @@
 package rs.edu.raf.clientapplication.view;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.internal.org.objectweb.asm.tree.JumpInsnNode;
 import rs.edu.raf.clientapplication.ClientApplication;
 import rs.edu.raf.clientapplication.restclient.UserServiceRestClient;
 import rs.edu.raf.clientapplication.restclient.dto.ClientDto;
-import rs.edu.raf.clientapplication.restclient.dto.HotelDto;
-import rs.edu.raf.clientapplication.restclient.dto.PayloadDto;
 import rs.edu.raf.clientapplication.restclient.dto.UpdateClientDto;
 
 import javax.swing.*;
@@ -25,7 +22,6 @@ public class UserChangeView extends JPanel {
     private JButton changeButton;
 
     private UserServiceRestClient userServiceRestClient = new UserServiceRestClient();
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     public UserChangeView() {
         this.setSize(1000, 1000);

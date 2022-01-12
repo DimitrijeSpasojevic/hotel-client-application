@@ -3,6 +3,7 @@ package rs.edu.raf.clientapplication.restclient;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import okhttp3.*;
 import rs.edu.raf.clientapplication.ClientApplication;
 import rs.edu.raf.clientapplication.restclient.dto.*;
@@ -114,5 +115,25 @@ public class ReservationServiceRestClient {
         }
 
         throw new RuntimeException("Nije uspelo kreiranje rezervacije od klijenta");
+    }
+
+    public ReservationDto deleteRezervacija(Long rezervacijaId) throws IOException {
+        Request request = new Request.Builder()
+                .url(URL + "/hotel-reservation-service/api/rezervacija/" + rezervacijaId)
+                .header("Authorization", "Bearer " + ClientApplication.getInstance().getToken())
+                .delete()
+                .build();
+
+        Call call = client.newCall(request);
+
+        Response response = call.execute();
+
+        if (response.isSuccessful()) {
+            String json = response.body().string();
+
+            return objectMapper.readValue(json, ReservationDto.class);
+        }
+
+        throw new RuntimeException("Nije uspelo brisanje rezervacije od klijenta");
     }
 }

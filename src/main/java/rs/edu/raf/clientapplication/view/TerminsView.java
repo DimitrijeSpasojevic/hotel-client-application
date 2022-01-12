@@ -21,13 +21,11 @@ public class TerminsView extends JPanel {
 	private JTable terminTable;
 	private TerminServiceRestClient terminServiceRestClient;
 	private ReservationServiceRestClient reservationServiceRestClient;
-	private JButton jButton;
 	private JButton jButtonCreateReservation;
 	private JTextField pocetniTerminInput;
 	private JTextField krajnjiTerminInput;
 	private JTextField tipSobeIdInput;
 	private Long userId;
-
 
 	public TerminsView() throws IllegalAccessException, NoSuchMethodException {
 		super();
@@ -44,8 +42,12 @@ public class TerminsView extends JPanel {
 		jButtonCreateReservation = new JButton("Create Reservation");
 		this.add(jButtonCreateReservation);
 
-		jButton = new JButton("Create Order");
-		this.add(jButton);
+		JButton backToHomeButton = new JButton("Back to home");
+		backToHomeButton.addActionListener((event) -> {
+			this.setVisible(false);
+			ClientApplication.getInstance().getHomePageView().init();
+		});
+		this.add(backToHomeButton);
 
 		jButtonCreateReservation.addActionListener((event) -> {
 			this.setVisible(false);

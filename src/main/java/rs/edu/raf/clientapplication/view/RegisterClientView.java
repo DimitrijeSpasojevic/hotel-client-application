@@ -1,6 +1,7 @@
 package rs.edu.raf.clientapplication.view;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import rs.edu.raf.clientapplication.ClientApplication;
 import rs.edu.raf.clientapplication.restclient.UserServiceRestClient;
 import rs.edu.raf.clientapplication.restclient.dto.CreateClientDto;
@@ -26,10 +27,7 @@ public class RegisterClientView extends JPanel {
 
     private UserServiceRestClient userServiceRestClient = new UserServiceRestClient();
 
-    private ObjectMapper objectMapper = new ObjectMapper();
-
     public RegisterClientView() {
-
         super();
         this.setSize(1000, 1000);
 

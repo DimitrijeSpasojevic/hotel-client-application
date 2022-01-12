@@ -3,13 +3,17 @@ package rs.edu.raf.clientapplication.view;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import rs.edu.raf.clientapplication.ClientApplication;
+import rs.edu.raf.clientapplication.restclient.HotelServiceRestClient;
 import rs.edu.raf.clientapplication.restclient.UserServiceRestClient;
 import rs.edu.raf.clientapplication.restclient.dto.CreateManagerDto;
+import rs.edu.raf.clientapplication.restclient.dto.HotelDto;
+import rs.edu.raf.clientapplication.restclient.dto.HotelListDto;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class RegisterManagerView extends JPanel {
     private JPanel inputPanel;
@@ -27,14 +31,12 @@ public class RegisterManagerView extends JPanel {
 
     private UserServiceRestClient userServiceRestClient = new UserServiceRestClient();
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private HotelServiceRestClient hotelServiceRestClient = new HotelServiceRestClient();
 
     public RegisterManagerView() {
-
         super();
         this.setSize(1000, 1000);
         initInputPanel();
-
         registerButton = new JButton("Register manager");
         this.add(registerButton);
 
@@ -51,9 +53,7 @@ public class RegisterManagerView extends JPanel {
                 CreateManagerDto createManagerDto = new CreateManagerDto();
                 createManagerDto.setEmail(emailInput.getText());
                 createManagerDto.setPassword(passwordInput.getText());
-                createManagerDto.setDateOfBirth(LocalDate.of(Integer.parseInt(yearOfBirthInput.getText()),
-                        Integer.parseInt(monthOfBirthInput.getText()),
-                        Integer.parseInt(dateOfBirthInput.getText())));
+                createManagerDto.setDateOfBirth(LocalDate.parse(dateOfBirthInput.getText(), DateTimeFormatter.ISO_LOCAL_DATE));
                 createManagerDto.setUsername(usernameInput.getText());
                 createManagerDto.setContact(contactInput.getText());
                 createManagerDto.setFirstName(firstNameInput.getText());

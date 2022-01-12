@@ -1,10 +1,6 @@
 package rs.edu.raf.clientapplication.view;
 
 import rs.edu.raf.clientapplication.ClientApplication;
-import rs.edu.raf.clientapplication.model.HotelTableModel;
-import rs.edu.raf.clientapplication.restclient.HotelServiceRestClient;
-import rs.edu.raf.clientapplication.restclient.dto.HotelListDto;
-import rs.edu.raf.clientapplication.restclient.dto.PayloadDto;
 
 import javax.swing.*;
 import java.awt.*;
