@@ -1,6 +1,7 @@
 package rs.edu.raf.clientapplication.view;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import rs.edu.raf.clientapplication.ClientApplication;
 import rs.edu.raf.clientapplication.restclient.UserServiceRestClient;
 import rs.edu.raf.clientapplication.restclient.dto.CreateManagerDto;
 
@@ -42,6 +43,7 @@ public class RegisterManagerView extends JPanel {
         registerButton = new JButton("Register manager");
         this.add(registerButton, BorderLayout.SOUTH);
         registerButton.addActionListener((event) -> {
+            this.setVisible(false);
             try {
                 CreateManagerDto createManagerDto = new CreateManagerDto();
                 createManagerDto.setEmail(emailInput.getText());
@@ -58,6 +60,7 @@ public class RegisterManagerView extends JPanel {
                         Integer.parseInt(dateOfHireInput.getText()),
                         Integer.parseInt(dateOfHireInput.getText())));
                 userServiceRestClient.registerManager(createManagerDto);
+                ClientApplication.getInstance().getLoginView().init();
             } catch (IOException e) {
                 e.printStackTrace();
             }

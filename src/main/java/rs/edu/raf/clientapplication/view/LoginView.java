@@ -55,7 +55,7 @@ public class LoginView extends JPanel {
 				String token = userServiceRestClient
 					.login(emailInput.getText(), String.valueOf(passwordInput.getPassword()));
 				ClientApplication.getInstance().setToken(token);
-				ClientApplication.getInstance().getHotelsView().init();
+				ClientApplication.getInstance().getHomePageView().init();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -79,5 +79,9 @@ public class LoginView extends JPanel {
 		inputPanel.add(passwordInput);
 
 		this.add(inputPanel, BorderLayout.CENTER);
+	}
+
+	public void init() {
+		this.setVisible(true);
 	}
 }

@@ -32,7 +32,6 @@ public class TerminsView extends JPanel {
 	public TerminsView() throws IllegalAccessException, NoSuchMethodException {
 		super();
 		this.setSize(1000, 1000);
-		//this.setLayout(new BorderLayout());
 
 		initInputPanel();
 		terminTableModel = new TerminTableModel();

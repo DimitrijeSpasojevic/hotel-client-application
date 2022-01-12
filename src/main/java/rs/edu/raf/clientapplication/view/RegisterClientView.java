@@ -1,6 +1,7 @@
 package rs.edu.raf.clientapplication.view;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import rs.edu.raf.clientapplication.ClientApplication;
 import rs.edu.raf.clientapplication.restclient.UserServiceRestClient;
 import rs.edu.raf.clientapplication.restclient.dto.CreateClientDto;
 
@@ -40,6 +41,7 @@ public class RegisterClientView extends JPanel {
         registerButton = new JButton("Register client");
         this.add(registerButton, BorderLayout.SOUTH);
         registerButton.addActionListener((event) -> {
+            this.setVisible(false);
             try {
                 CreateClientDto createClientDto = new CreateClientDto();
                 createClientDto.setEmail(emailInput.getText());
@@ -53,6 +55,7 @@ public class RegisterClientView extends JPanel {
                 createClientDto.setLastName(lastNameInput.getText());
                 createClientDto.setPassportId(Long.valueOf(passportInput.getText()));
                 userServiceRestClient.registerClient(createClientDto);
+                ClientApplication.getInstance().getLoginView().init();
             } catch (IOException e) {
                 e.printStackTrace();
             }

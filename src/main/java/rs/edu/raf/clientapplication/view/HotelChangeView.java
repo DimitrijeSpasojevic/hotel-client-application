@@ -69,7 +69,11 @@ public class HotelChangeView extends JPanel{
         this.add(inputPanel, BorderLayout.CENTER);
     }
 
-    public void init(){
+    public void init() throws IOException {
+        HotelDto hotelDto = hotelServiceRestClient.getHotelDto(hotelId);
+        nameInput.setText(hotelDto.getIme());
+        descriptionInput.setText(hotelDto.getOpis());
+        cityInput.setText(hotelDto.getGrad());
         this.setVisible(true);
     }
 

@@ -58,7 +58,11 @@ public class HotelsView extends JPanel {
             Long id = hotelTableModel.getHotelListDto().getContent().get(hotelTable.getSelectedRow()).getId();
             System.out.println(id);
             ClientApplication.getInstance().getHotelChangeView().setHotelId(id);
-            ClientApplication.getInstance().getHotelChangeView().init();
+            try {
+                ClientApplication.getInstance().getHotelChangeView().init();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
 
         setVisible(false);

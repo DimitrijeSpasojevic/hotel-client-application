@@ -19,11 +19,15 @@ public class ClientApplication extends JFrame{
     private RegisterManagerView registerManagerView;
     private ReservationView reservationView;
     private UserChangeView userChangeView;
+    private HomePageView homePageView;
 
     private ClientApplication() throws IllegalAccessException, NoSuchMethodException {
         this.setTitle("Client Application");
         this.setSize(1200, 1200);
         this.setLayout(new BorderLayout());
+
+        homePageView = new HomePageView();
+        this.add(homePageView, BorderLayout.CENTER);
 
         loginView = new LoginView();
         this.add(loginView, BorderLayout.NORTH);
@@ -154,5 +158,11 @@ public class ClientApplication extends JFrame{
         this.userChangeView = userChangeView;
     }
 
+    public HomePageView getHomePageView() {
+        return homePageView;
+    }
 
+    public void setHomePageView(HomePageView homePageView) {
+        this.homePageView = homePageView;
+    }
 }
