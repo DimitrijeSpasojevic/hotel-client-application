@@ -11,7 +11,7 @@ public class TerminTableModel extends DefaultTableModel {
 
 
 	public TerminTableModel() throws IllegalAccessException, NoSuchMethodException {
-		super(new String[]{"TipSobeId", "Hotel","BrojSlobodnihSoba","Datum","TipSobe"}, 0);
+		super(new String[]{"TipSobeId", "Hotel", "BrojSlobodnihSoba", "Datum","TipSobe", "TerminId"}, 0);
 	}
 
 	private TerminListDto terminListDto = new TerminListDto();
